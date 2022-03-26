@@ -1,2 +1,2 @@
-# CV_VBE_TemelPython
+# CV_VBE
 Coskunoz Vakfi - Veri Bilimi Egitimi
