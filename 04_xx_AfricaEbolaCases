@@ -1,15 +1,13 @@
 import plotly.graph_objects as go
 import pandas as pd
 
-# %%
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2014_ebola.csv')
 print(df.head())
 
 # %%
 colors = ['rgb(239,243,255)', 'rgb(189,215,231)', 'rgb(107,174,214)', 'rgb(33,113,181)']
-months = {6: 'June', 7: 'July', 8: 'Aug', 9:'Sep'}
+months = {6: 'June', 7: 'July', 8: 'Aug', 9: 'Sept'}
 
-# %%
 fig = go.Figure()
 
 for i in range(6, 10)[::-1]:
@@ -21,28 +19,26 @@ for i in range(6, 10)[::-1]:
         name=months[i],
         marker=dict(
             size=df_month['Value'] / 50,
-            color=colors[i-6],
+            color=colors[i - 6],
             line_width=0
         )))
 
-# %%
 df_sept = df.query('Month == 9')
-
-# %%
 fig['data'][0].update(mode='markers+text', textposition='bottom center',
-                      text = df_sept['Value'].map('{:.0f}'.format).astype(str) + ' ' +
-df_sept['Country'])
+                      text=df_sept['Value'].map('{:.0f}'.format).astype(str) + ' ' + \
+                           df_sept['Country'])
 
-# %%
+# Inset
 fig.add_trace(go.Choropleth(
-    lon=[21.0936],
-    lat=[7.1881],
-    text=['Africa'],
-    mode='text',
-    showlegend=False,
-    geo='geo2'))
-
-# %%
+    locationmode='country names',
+    locations=df_sept['Country'],
+    z=df_sept['Value'],
+    text=df_sept['Country'],
+    colorscale=[[0, 'rgb(0, 0, 0)'], [1, 'rgb(0, 0, 0)']],
+    autocolorscale=False,
+    showscale=False,
+    geo='geo2'
+))
 fig.add_trace(go.Scattergeo(
     lon=[21.0936],
     lat=[7.1881],
@@ -51,11 +47,12 @@ fig.add_trace(go.Scattergeo(
     showlegend=False,
     geo='geo2'
 ))
-# %%
+
 fig.update_layout(
     title=go.layout.Title(
-        text='EBOLA CASES'
-    ),
+        text='Ebola cases reported by month in West Africa 2014<br> \
+Source: <a href="https://data.hdx.rwlabs.org/dataset/rowca-ebola-cases">\
+HDX</a>'),
     geo=go.layout.Geo(
         resolution=50,
         scope='africa',
@@ -80,12 +77,4 @@ fig.update_layout(
     legend_traceorder='reversed'
 )
 
-# %%
 fig.show()
-
-
-
-
-
-
-
