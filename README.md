@@ -1,2 +1,2 @@
 # CV_VBE_TemelPython
-Coskunoz Vakfi - Veri Bilimi Egitimi (Temel Bilgiler)
+Coskunoz Vakfi - Veri Bilimi Egitimi
